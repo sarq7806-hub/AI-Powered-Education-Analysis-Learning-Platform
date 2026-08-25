@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Goal List Highlighter</title>
+<!-- Google Fonts for stylish text -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto&display=swap" rel="stylesheet" />
+<style>
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #ece9e6, #ffffff);
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Title style */
+h1 {
+  font-family: 'Pacifico', cursive;
+  font-size: 3em;
+  color: #333;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Input area */
+#goalInputContainer {
+  display: flex;
+  width: 80%;
+  max-width: 600px;
+  margin-bottom: 30px;
+}
+
+#goalInput {
+  flex: 1;
+  padding: 15px 20px;
+  font-size: 1.2em;
+  border: 2px solid #ccc;
+  border-radius: 8px 0 0 8px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+#goalInput:focus {
+  border-color: #007bff;
+}
+#addButton {
+  padding: 15px 25px;
+  font-size: 1.2em;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+#addButton:hover {
+  background-color: #0056b3;
+}
+
+/* Goals list styling */
+#goalsContainer {
+  width: 80%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.goal-item {
+  background: #fff;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.goal-item:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+.goal-item.active {
+  background: #ffe4b5;
+  font-weight: bold;
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Highlighted goal big frame */
+#highlightFrame {
+  margin-top: 40px;
+  width: 80%;
+  max-width: 600px;
+  min-height: 150px;
+  padding: 30px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Pacifico', cursive;
+  font-size: 2em;
+  color: #fff;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+#highlightFrame span {
+  padding: 10px 20px;
+}
+
+/* Responsive adjustments */
+@media(max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+  #goalInputContainer {
+    flex-direction: column;
+  }
+  #goalInput, #addButton {
+    border-radius: 8px;
+  }
+  #addButton {
+    margin-top: 10px;
+  }
+}
+</style>
+</head>
+<body>
+
+<h1>My Goals</h1>
+
+<!-- Goal Input -->
+<div id="goalInputContainer">
+  <input type="text" id="goalInput" placeholder="Add a new goal" />
+  <button id="addButton" onclick="addGoal()">Add Goal</button>
+</div>
+
+<!-- Goals List -->
+<div id="goalsContainer"></div>
+
+<!-- Highlighted Frame for Selected Goal -->
+<div id="highlightFrame"><span>Select a goal to see it here!</span></div>
+
+<script>
+let goals = [];
+let selectedGoal = null;
+
+// Function to add goal
+function addGoal() {
+  const input = document.getElementById('goalInput');
+  const goalText = input.value.trim();
+  if (goalText && !goals.includes(goalText)) {
+    goals.push(goalText);
+    input.value = '';
+    renderGoals();
+    selectGoal(goalText); // Automatically select the new goal
+  }
+}
+
+// Function to render goals list
+function renderGoals() {
+  const container = document.getElementById('goalsContainer');
+  container.innerHTML = '';
+
+  goals.forEach(goal => {
+    const div = document.createElement('div');
+    div.className = 'goal-item' + (goal === selectedGoal ? ' active' : '');
+    div.innerHTML = `
+      <span onclick="selectGoal('${goal}')">${goal}</span>
+      <button onclick="deleteGoal('${goal}')">🗑️</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// Function to select a goal
+function selectGoal(goal) {
+  selectedGoal = goal;
+  renderGoals();
+  updateHighlight();
+}
+
+// Function to update the big highlighted frame
+function updateHighlight() {
+  const frame = document.getElementById('highlightFrame');
+  if (selectedGoal) {
+    frame.innerHTML = `<span>${selectedGoal}</span>`;
+  } else {
+    frame.innerHTML = `<span>Select a goal to see it here!</span>`;
+  }
+}
+
+// Function to delete a goal
+function deleteGoal(goal) {
+  goals = goals.filter(g => g !== goal);
+  if (selectedGoal === goal) {
+    selectedGoal = null;
+    updateHighlight();
+  }
+  renderGoals();
+}
+
+// Initial rendering
+renderGoals();
+</script>
+
+</body>
+</html>

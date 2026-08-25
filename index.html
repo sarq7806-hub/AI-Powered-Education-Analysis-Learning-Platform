@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}AI Education Platform{% endblock %}</title>
+  <style>
+  /* --- Your CSS styles from the large style block --- */
+  :root{
+    --bg:#08111f;
+    --bg2:#0e1730;
+    --card:rgba(255,255,255,.08);
+    --card2:rgba(255,255,255,.12);
+    --text:#eef4ff;
+    --muted:#b7c2dc;
+    --primary:#7c5cff;
+    --secondary:#20c6c8;
+    --accent:#ffb86b;
+    --success:#45d483;
+    --danger:#ff6b8b;
+    --shadow:0 24px 70px rgba(0,0,0,.35);
+    --radius:24px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(circle at top left, rgba(124,92,255,.18), transparent 28%),
+      radial-gradient(circle at top right, rgba(32,198,200,.16), transparent 25%),
+      linear-gradient(180deg,var(--bg),#060b14 100%);
+    color:var(--text);
+    min-height:100vh;
+    line-height:1.6;
+  }
+  a{text-decoration:none;color:inherit}
+  img{max-width:100%;display:block}
+  .container{width:min(1200px,92%);margin:auto}
+  header{
+    position:sticky;top:0;z-index:1000;
+    background:rgba(6,11,20,.72);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 0;gap:16px
+  }
+  .logo{font-size:1.35rem;font-weight:900;letter-spacing:.3px}
+  .logo span{color:var(--secondary)}
+  .nav ul{display:flex;gap:24px;list-style:none;flex-wrap:wrap;justify-content:center}
+  .nav a{color:var(--muted);transition:.25s}
+  .nav a:hover,.nav a.active{color:var(--text)}
+  .hero{
+    padding:78px 0 44px;
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:38px;
+    align-items:center
+  }
+  .hero h1{
+    font-size:clamp(2.6rem,5vw,5rem);
+    line-height:1.03;
+    margin-bottom:18px
+  }
+  .hero h1 span{
+    background:linear-gradient(90deg,var(--secondary),var(--primary),var(--accent));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent
+  }
+  .hero p{color:var(--muted);max-width:650px;font-size:1.05rem;margin-bottom:28px}
+  .buttons{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{
+    padding:14px 22px;border-radius:999px;font-weight:800;
+    display:inline-block;transition:.25s ease;border:1px solid transparent
+  }
+  .btn-primary{background:linear-gradient(135deg,var(--primary),var(--secondary));box-shadow:0 12px 30px rgba(124,92,255,.25)}
+  .btn-secondary{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.14);color:var(--text)}
+  .btn:hover{transform:translateY(-2px)}
+  .hero-card,.card,.panel,.course,.stat,.feature{
+    background:var(--card);
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:var(--shadow)
+  }
+  .hero-card{border-radius:var(--radius);padding:22px}
+  .dashboard-mini{display:grid;gap:14px}
+  .metric{
+    padding:18px;border-radius:18px;background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08)
+  }
+  .metric h3{margin-bottom:6px;font-size:1.05rem}
+  .metric p{color:var(--muted);font-size:.95rem}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:16px 0 70px}
+  .stat{text-align:center;padding:24px;border-radius:20px}
+  .stat strong{display:block;font-size:2rem;color:var(--secondary);margin-bottom:6px}
+  section{padding:18px 0 70px}
+  .section-title{font-size:2rem;margin-bottom:10px}
+  .section-subtitle{color:var(--muted);max-width:760px;margin-bottom:28px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .card,.feature,.panel,.course{
+    border-radius:var(--radius);padding:24px;transition:.25s ease
+  }
+  .card:hover,.feature:hover,.course:hover{transform:translateY(-4px);background:var(--card2)}
+  .icon{
+    width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
+    background:linear-gradient(135deg,rgba(124,92,255,.25),rgba(32,198,200,.25));
+    margin-bottom:14px;font-size:1.4rem
+  }
+  .card h3,.feature h3,.panel h3,.course h4{margin-bottom:10px}
+  .card p,.feature p,.panel p,.course p{color:var(--muted)}
+  .progress-row{margin:14px 0}
+  .progress-head{display:flex;justify-content:space-between;margin-bottom:8px;color:var(--muted);font-size:.95rem}
+  .bar{height:10px;border-radius:999px;background:rgba(255,255,255,.08);}
+  .bar span{
+    display:block;height:100%;border-radius:999px;
+    background:linear-gradient(90deg,var(--primary),var(--secondary))
+  }
+  .course-top{
+    height:130px;border-radius:18px;
+    background:linear-gradient(135deg,var(--primary),var(--secondary))
+  }
+  .table-wrap{
+    overflow:auto;border-radius:var(--radius);
+    border:1px solid rgba(255,255,255,.1);box-shadow:var(--shadow)
+  }
+  table{width:100%;border-collapse:collapse;background:rgba(255,255,255,.05)}
+  th,td{padding:16px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08)}
+  th{background:rgba(255,255,255,.08)}
+  td{color:var(--muted)}
+  .timeline{display:grid;gap:14px}
+  .step{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:18px;border-radius:18px;background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08)
+  }
+  .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);margin-top:8px;flex:0 0 auto}
+  .form{
+    display:grid;gap:14px;max-width:760px
+  }
+  .input,textarea,select{
+    width:100%;padding:15px 16px;border-radius:16px;border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.05);color:var(--text);outline:none
+  }
+  textarea{min-height:160px;resize:vertical}
+  .cta{
+    display:flex;justify-content:space-between;align-items:center;gap:20px;
+    padding:32px;border-radius:28px;background:linear-gradient(135deg,rgba(124,92,255,.20),rgba(32,198,200,.16));
+    border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow)
+  }
+  footer{
+    padding:24px 0 40px;text-align:center;color:var(--muted);
+    border-top:1px solid rgba(255,255,255,.08)
+  }
+  @media(max-width:980px){
+    .hero,.grid-3,.grid-2,.stat-grid,.cta{grid-template-columns:1fr;display:grid}
+    .nav{flex-direction:column}
+  }
+  </style>
+</head>
+<body>
+<header>
+<div class="container nav">
+<div class="logo">AI<span>Learn</span> Pulse</div>
+<ul>
+<li>Home</li>
+<li><a href="https://project545291.app.n8n.cloud/webhook/2d9e6986-7e93-4be3-b0f6-bf78620083a9/chat">Features</a></li>
+<li><a href="https://amityonline.com/lp-nw-amity?utm_source=111&utm_medium=Online&utm_campaign=AUO_Dom_GEN_ALL_Bing_NBSearch_Ind&utm_keyword=online%20college%20degree%20program&mx_utm_campaignid=568857711&utm_adgroupid=1184175810895291&msclkid=5c81e735b6a910b9e2488d0336238a55">Courses</a></li>
+<li><a href="file:///C:/Users/Ayesha/Desktop/project%20A/contact/vontact.html">Contact</a></li>
+</ul>
+</div>
+</header>
+</body>
+</html>
+
+<section class="hero">
+<div>
+<h1>Welcome to the AI Powered Education Analysis & Learning Platform</h1>
+<p>Empowering students and teachers with AI-driven education tools.</p>
+<a href="file:///C:/Users/Ayesha/Desktop/project%20A/login/login.html" class="btn btn-primary">Login</a>
+<a href="file:///C:/Users/Ayesha/Desktop/project%20A/Register/register.html" class="btn btn-primary">Register</a>
+<a href="https://project545291.app.n8n.cloud/webhook/2d9e6986-7e93-4be3-b0f6-bf78620083a9/chat" class="btn btn-primary">🤖 AI Assistant</a>
+</div>
+<div class="hero-card">
+<div class="dashboard-mini">
+<div class="metric"><a href="file:///C:/Users/Ayesha/Desktop/project%20A/ailerninginsight.html">
+<h3>AI Learning Insight</h3></a>
+<p>You improve faster when revising science in shorter sessions.</p>
+</div>
+<div class="metric"><a href="file:///C:/Users/Ayesha/Desktop/project%20A/Data%20Performance%20Dashboard/dataperformance.html">
+<h3>Weekly Performance</h3></a>
+<p>Math: 86%, Science: 71%, English: 90%.</p>
+</div>
+<div class="metric"><a href="file:///C:/Users/Ayesha/Desktop/project%20A/suggested%20action/suggested.html">
+<h3>Suggested Action</h3></a>
+<p>Complete 3 quizzes, 2 lessons, and one practice test today.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="stat-grid">
+<div class="stat"><strong>15K+</strong> Students</div>
+<div class="stat"><strong>300+</strong> Smart Lessons</div>
+<div class="stat"><strong>120+</strong> AI Quizzes</div>
+<div class="stat"><strong>98%</strong> Satisfaction</div>
+</section>
+<section>
+<h2 class="section-title">Why this platform stands out</h2>
+<p class="section-subtitle">
+Built for students who want a beautiful and useful experience with learning analytics,
+adaptive study paths, and engaging progress tracking.
+</p>
+<div class="grid-3">
+<div class="card">
+<div class="icon">🏆</div> 
+<a class="btn btn-primary" href="file:///C:/Users/Ayesha/Desktop/project%20A/my%20goal/mygoal.html"><h3>My Goal's</h3></a>
+<p>Track scores, study time, topic mastery, and performance trends with simple visual summaries.</p>
+</div>
+<div class="card">
+<div class="icon">🤖</div> <a class="btn btn-primary" href="https://www.studley.ai/">
+<h3>AI Study Assistant</h3></a>
+<p>Get smart suggestions, revision plans, and help choosing what to study next.</p>
+</div>
+<div class="card">
+<div class="icon">🏆</div><a class="btn btn-primary" href="file:///C:/Users/Ayesha/Desktop/project%20A/gamified.html">
+<h3>Gamified Progress</h3></a>
+<p>Earn streaks, badges, points, and achievement rewards that keep students motivated.</p>
+</div>
+</div>
+</section>
+<section>
+<div class="cta">
+<div>
+<h2>Study smarter, not harder</h2>
+<p>Use AI insights to focus on weak areas, build better habits, and improve results with confidence.</p>
+</div>
+<a class="btn btn-primary" href="https://easelearnai.in/">Get Started</a>
+</div>
+</section>
+</main>
+<h1 class="section-title">Platform Features</h1>
+<p class="section-subtitle">Inspired by modern AI learning and education platforms, with extra tools students will actually use.</p>
+<div class="grid-3">
+<div class="feature card">
+<div class="icon">🎨</div><a class="btn btn-primary" href=file:///C:/Users/Ayesha/Desktop/project%20A/Data%20Performance%20Dashboard/dataperformance.html>
+<h3> Data Performance Dashboard</h3></a>
+<p>Shows accuracy, speed, mistakes, and topic-wise score breakdowns.</p>
+</div>
+<div class="feature card">
+<div class="icon">🧠</div><a class="btn btn-primary" href="https://use.ai/?model=gpt-5.6&utm_source=bing&utm_medium=cpc&utm_campaign=AI_WW_EN-T1_Chat_ALL_SEA_GEN_AITools_JKR_IH&utm_campaign_id=524517008&utm_adgroup=JKR_AI-Tools-Software&utm_adgroup_id=1318317412802965&utm_term=best+artificial+intelligence+tools&utm_match_type=e&utm_content=&utm_content_id=&utm_funnel=&partner=WM&url=https%3A%2F%2Fuse.ai%2F%3Fmodel%3Dgpt-5.6&msclkid=5b9b9ddd6b971296c30bf758bf3b7780"><h3>Personalized AI Assistant</h3></a>
+<p>Guides students with hints, explanations, and adaptive practice instead of generic lessons.</p>
+</div>
+<div class="feature card">
+<div class="icon">📈</div>
+<a class="btn btn-primary" href="file:///C:/Users/Ayesha/Desktop/project%20A/skill%20gap%20detection.html"><h3> Skill Gap Detection</h3></a>
+<p>Finds weak concepts automatically and recommends what to revise first.</p>
+</div>
+<div class="feature card">
+<div class="icon">⏱️</div> <a class="btn btn-primary" href="file:///C:/Users/Ayesha/Desktop/project%20A/Study%20planner/studyplanner.html">
+<h3>Study Planner</h3></a>
+<p>Creates a daily learning schedule based on class, exam date, and available time.</p>
+</div>
+<div class="feature card">
+<div class="icon">📝</div><a class="btn btn-primary" href="file:///C:/Users/Ayesha/Desktop/project%20A/quiz%20game/quiz.html">
+<h3>Quiz & Test Reports</h3></a>
+<p>Shows accuracy, speed, mistakes, and topic-wise score breakdowns.</p>
+</div>
+<div class="feature card">
+<div class="icon">🔥</div> <a class="btn btn-primary" href="file:///C:/Users/Ayesha/Desktop/project%20A/stremotivation.html">
+<h3>Streak & Motivation</h3></a>
+<p>Daily streaks and badges encourage consistency and long-term progress.</p>
+</div>
+<div class="feature card">
+<h3><div class="icon">📚</div> <a class="btn btn-primary" href="file:///C:/Users/Ayesha/Desktop/project%20A/personal%20library/library.html">
+Personal Library</h3></a>
+<p>A feature that helps users store, organize, and easily access their personal books, notes, documents, and study materials.</p>
+</div>
+<div class="feature card">
+<div class="icon">💰</div> <a class="btn btn-primary" href="file:///C:/Users/Ayesha/Desktop/project%20A/Expense%20Tracker/expensetracker.html">
+<h3>Expense Tracker</h3></a>
+<p>An Expense Tracker is a tool used to keep track of money coming in and money going out.</p>
+</div>
+<div class="feature card">
+<div class="icon">🔐</div> <a class="btn btn-primary" href="file:///C:/Users/Ayesha/Desktop/project%20A/personal%20password%20generator/password.html">
+<h3>Personal Password Generator</h3></a>
+<p>A tool that creates strong, unique passwords to help users protect their online accounts.</p>
+</div>
+<div class="feature card">
+<div class="icon">📖</div> <a class="btn btn-primary" href="file:///C:/Users/Ayesha/Desktop/project%20A/Digital%20dictoner/digitaldictoner.html">
+<h3> Digital Dictionary</h3></a>
+<p>A digital tool that provides word meanings, definitions, synonyms, antonyms, and examples.</p>
+</div>
+<div class="feature card">
+<div class="icon">📝 </div> <a class="btn btn-primary" href="file:///C:/Users/Ayesha/Desktop/project%20A/To-Do%20list/todo.html">
+<h3>To-Do List</h3></a>
+<p>A feature that helps users create, manage, and track their daily tasks.</p>
+</div>
+<div class="feature card">
+<div class="icon">🌐</div> <a class="btn btn-primary" href="https://multilingual.chat/?lang=en">
+<h3>Multilingual Support</h3></a>
+<p>Helps students learn in their preferred language and improves accessibility.</p>
+</div>
+</div> 
+<br>
+<div class="feature card">
+<a class="btn btn-primary" href="https://textguard.ai/humanize?utm_source=524011749&utm_campaignid=524011749&utm_medium=1326013802311036&utm_content=&keyword=writing%20tools%20for%20students&source=bing&trafficsource=Search&utm_campaign=P_TextGuard_WW_english_BING_17.03.2026_GENERIC_HUMANIZER_NEW_DS&msclkid=27ff9831f54e1a3b831af2076056f771">
+<h2 class="section-title">Extra student tools</h2></a> 
+<p>Notes, flashcards, timers, dictionary, revision mode, and focus sessions in one place.</p>
+</div>
+</div>
+</div>
+<br>
+<br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI-Powered Education Analysis & Learning Platform </title>
+</head>
+<body style="background-color: black; color: white; font-family: Arial, sans-serif; margin: 20px; line-height: 1.6;">
+
+<header style="text-align: center; padding-bottom: 20px;">
+    <h1 style="color: white;">AI-Powered Education Analysis & Learning Platform</h1>
+    <p>Transforming Education with Artificial Intelligence</p>
+</header>
+
+<!-- Purple line -->
+<hr style="border: none; height: 2px; background-color: purple; margin: 20px 0;">
+
+<section style="background-color: #222; margin-bottom: 20px; padding: 20px; border-radius: 8px;">
+    <h2 style="color: #f1c40f;">Introduction</h2>
+    <p>
+        The advent of artificial intelligence (AI) has revolutionized various sectors, and education is no exception. AI-powered education analysis and learning platforms leverage advanced algorithms to transform traditional educational paradigms, making learning more personalized, efficient, and accessible. These platforms utilize data-driven insights to optimize teaching strategies, monitor student progress, and foster an engaging learning environment.
+    </p>
+</section>
+
+<!-- Purple line -->
+<hr style="border: none; height: 2px; background-color: purple; margin: 20px 0;">
+
+<section style="background-color: #222; margin-bottom: 20px; padding: 20px; border-radius: 8px;">
+    <h2 style="color: #f1c40f;">Key Features and Capabilities</h2>
+    <ul>
+        <li><strong>Personalized Learning Paths:</strong> Analyzes individual student data to tailor educational content, enhancing engagement and retention.</li>
+        <li><strong>Intelligent Assessment and Feedback:</strong> Automates evaluation of student work with immediate, accurate feedback.</li>
+        <li><strong>Predictive Analytics:</strong> Foresees student performance trends and identifies at-risk learners for targeted support.</li>
+        <li><strong>Adaptive Content Delivery:</strong> Dynamically adjusts difficulty and content based on real-time interactions.</li>
+        <li><strong>Automated Administrative Tasks:</strong> Streamlines processes such as enrollment, scheduling, and grading.</li>
+        <li><strong>Data-Driven Decision Making:</strong> Provides insights for curriculum development and resource management.</li>
+    </ul>
+</section>
+
+<!-- Purple line -->
+<hr style="border: none; height: 2px; background-color: purple; margin: 20px 0;">
+
+<section style="background-color: #222; margin-bottom: 20px; padding: 20px; border-radius: 8px;">
+    <h2 style="color: #f1c40f;">Benefits</h2>
+    <ul>
+        <li><strong>Enhanced Personalization:</strong> Tailors experiences to individual learner needs.</li>
+        <li><strong>Increased Accessibility:</strong> Supports remote and inclusive education worldwide.</li>
+        <li><strong>Scalability:</strong> Enables large-scale educational initiatives.</li>
+        <li><strong>Continuous Improvement:</strong> Uses ongoing data to refine teaching strategies and content.</li>
+    </ul>
+</section>
+
+<!-- Purple line -->
+<hr style="border: none; height: 2px; background-color: purple; margin: 20px 0;">
+
+<section style="background-color: #222; margin-bottom: 20px; padding: 20px; border-radius: 8px;">
+    <h2 style="color: #f1c40f;">Challenges and Considerations</h2>
+    <ul>
+        <li><strong>Data Privacy and Security:</strong> Protecting sensitive student information.</li>
+        <li><strong>Bias and Fairness:</strong> Ensuring algorithms do not perpetuate biases.</li>
+        <li><strong>Technology Access:</strong> Addressing disparities in device and internet access.</li>
+        <li><strong>Ethical Use:</strong> Balancing automation with human oversight.</li>
+    </ul>
+</section>
+
+<!-- Purple line -->
+<hr style="border: none; height: 2px; background-color: purple; margin: 20px 0;">
+
+<section style="background-color: #222; margin-bottom: 20px; padding: 20px; border-radius: 8px;">
+    <h2 style="color: #f1c40f;">Future Outlook</h2>
+    <p>
+        The future of AI-powered education platforms is promising, with advancements in natural language processing, machine learning, and immersive technologies like VR/AR. These innovations will further democratize education and support lifelong learning, making education more engaging, personalized, and accessible globally.
+    </p>
+</section>
+
+<!-- Purple line -->
+<hr style="border: none; height: 2px; background-color: purple; margin: 20px 0;">
+
+<section style="background-color: #222; margin-bottom: 20px; padding: 20px; border-radius: 8px;">
+    <h2 style="color: #f1c40f;">Conclusion</h2>
+    <p>
+        AI-powered education analysis and learning platforms are transforming the educational landscape by providing personalized, scalable, and efficient learning experiences. Responsible adoption and ongoing innovation will be crucial in shaping the future of education for learners everywhere.
+    </p>
+</section>
+
+<!-- Purple line -->
+<hr style="border: none; height: 2px; background-color: purple; margin: 20px 0;">
+
+</body>
+</html><a href="https://amityonline.com/lp-nw-amity?utm_source=111&utm_medium=Online&utm_campaign=AUO_Dom_GEN_ALL_Bing_NBSearch_Ind&utm_keyword=online%20college%20degree%20program&mx_utm_campaignid=568857711&utm_adgroupid=1184175810895291&msclkid=5c81e735b6a910b9e2488d0336238a55">
+<h1 class="section-title">Popular Courses</h1></a>
+<p class="section-subtitle">Choose a path that fits your goals and follow AI-recommended study sequences.</p>
+<div class="grid-3">
+<div class="course">
+<div class="course-top"></div>
+<div class="course-body">
+<a href="https://www.udemy.com/course/introduction-to-ai-learn-basics-of-artificial-intelligence/?couponCode=KEEPLEARNING"><h4>AI Basics</h4></a>
+<p>Learn the fundamentals of artificial intelligence, machine learning, and applications.</p>
+</div>
+</div>
+<div class="course">
+<div class="course-top"></div>
+<div class="course-body">
+<a href="https://www.udemy.com/topic/data-analysis/">
+<h4>Data Analytics</h4></a>
+<p>Understand charts, trends, data cleaning, and practical analysis for study improvement.</p>
+</div>
+</div>
+<div class="course">
+<div class="course-top"></div>
+<div class="course-body"><a href="https://www.udemy.com/course/pmp-exam-booster-720-high-yield-questions/?couponCode=KEEPLEARNING">
+<h4>Exam Booster</h4></a>
+<p>Focused revision, mock tests, and topic recommendations for exam success.</p>
+</div>
+</div>
+</div>
+<h2 class="section-title">Course comparison</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Course</th>
+<th>Level</th>
+<th>Duration</th>
+<th>Highlight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI Basics</td>
+<td>Beginner</td>
+<td>4 Weeks</td>
+<td>Simple AI concepts and hands-on examples</td>
+</tr>
+<tr>
+<td>Data Analytics</td>
+<td>Intermediate</td>
+<td>6 Weeks</td>
+<td>Learn to read and use student performance data</td>
+</tr>
+<tr>
+<td>Exam Booster</td>
+<td>All Levels</td>
+<td>2 Weeks</td>
+<td>Revision planner and test practice</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="grid-2">
+<div class="panel">
+<h3>Weekly Progress</h3>
+<div class="progress-row">
+<div class="progress-head"><span>Math</span><span>86%</span></div>
+<div class="bar"><span style="width:86%"></span></div>
+</div>
+<div class="progress-row">
+<div class="progress-head"><span>Science</span><span>72%</span></div>
+<div class="bar"><span style="width:72%"></span></div>
+</div>
+<div class="progress-row">
+<div class="progress-head"><span>English</span><span>91%</span></div>
+<div class="bar"><span style="width:91%"></span></div>
+</div>
+</div>
+<div class="panel">
+<h3>AI Suggestions</h3>
+<div class="timeline">
+<div class="step"><div class="dot"></div><div>Revise weak topics before starting new lessons.</div></div>
+<div class="step"><div class="dot"></div><div>Take one short quiz after each study session.</div></div>
+<div class="step"><div class="dot"></div><div>Use spaced repetition for long-term memory.</div></div>
+</div>
+</div>
+</div>
+<h1 class="section-title">Feedback</h1>
+<form class="form">
+<input class="input" type="text" placeholder="Your Name" />
+<input class="input" type="email" placeholder="Email Address" />
+<select class="input">
+<option>Student</option>
+<option>Teacher</option>
+<option>Parent</option>
+<option>Institute</option>
+</select>
+<textarea placeholder="Write your message here..."></textarea>
+<a class="btn btn-primary" href="#">Send Message</a>
+</form>

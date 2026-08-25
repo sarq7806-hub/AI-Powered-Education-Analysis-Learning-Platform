@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Study Planner</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <h1>My Study Planner</h1>
+  <button id="darkModeBtn">🌙 Dark Mode</button>
+</header>
+
+<div class="container">
+  <nav class="sidebar">
+    <button class="tablink" onclick="openSection('Profile')">Profile</button>
+    <button class="tablink" onclick="openSection('Subjects')">Subjects</button>
+    <button class="tablink" onclick="openSection('Timetable')">Timetable</button>
+    <button class="tablink" onclick="openSection('Goals')">Goals</button>
+    <button class="tablink" onclick="openSection('Tasks')">Tasks</button>
+    <button class="tablink" onclick="openSection('Progress')">Progress</button>
+    <button class="tablink" onclick="openSection('Revision')">Revision</button>
+  </nav>
+
+  <main class="main-content">
+    <!-- Profile Section -->
+    <section id="Profile" class="section">
+      <h2>Student Profile</h2>
+      <p>Name: <input type="text" id="profileName" placeholder="Your Name" /></p>
+      <p>Subjects: <span id="profileSubjects">None added</span></p>
+      <button onclick="saveProfile()">Save Profile</button>
+    </section>
+
+    <!-- Subjects Management -->
+    <section id="Subjects" class="section" style="display:none;">
+      <h2>Subjects Management</h2>
+      <input type="text" id="subjectInput" placeholder="Add Subject" />
+      <button onclick="addSubject()">Add Subject</button>
+      <ul id="subjectList"></ul>
+    </section>
+
+    <!-- Timetable -->
+    <section id="Timetable" class="section" style="display:none;">
+      <h2>Study Timetable</h2>
+      <div id="timetableContainer">
+        <p>Use the planner below to schedule your study sessions.</p>
+        <!-- Simple timetable grid -->
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Activity</th>
+            </tr>
+          </thead>
+          <tbody id="timetableBody"></tbody>
+        </table>
+        <input type="text" id="timetableTime" placeholder="Time (e.g., 7:00-8:00)" />
+        <input type="text" id="timetableActivity" placeholder="Activity (e.g., Python)" />
+        <button onclick="addTimetableEntry()">Add Entry</button>
+      </div>
+    </section>
+
+    <!-- Goals -->
+    <section id="Goals" class="section" style="display:none;">
+      <h2>Study Goals</h2>
+      <input type="text" id="goalInput" placeholder="Set a goal (e.g., Complete Python Chapter 3)" />
+      <button onclick="addGoal()">Add Goal</button>
+      <ul id="goalList"></ul>
+    </section>
+
+    <!-- Tasks / To-do -->
+    <section id="Tasks" class="section" style="display:none;">
+      <h2>To-Do Tasks</h2>
+      <input type="text" id="taskInput" placeholder="Add task" />
+      <button onclick="addTask()">Add Task</button>
+      <ul id="taskList"></ul>
+    </section>
+
+    <!-- Progress Dashboard -->
+    <section id="Progress" class="section" style="display:none;">
+      <h2>Progress & Stats</h2>
+      <canvas id="progressChart" width="400" height="200"></canvas>
+      <button onclick="updateProgress()">Update Progress</button>
+    </section>
+
+    <!-- Revision Scheduler -->
+    <section id="Revision" class="section" style="display:none;">
+      <h2>Revision Scheduler</h2>
+      <p>Schedule revision topics:</p>
+      <input type="text" id="revisionTopic" placeholder="Topic to revise" />
+      <input type="date" id="revisionDate" />
+      <button onclick="scheduleRevision()">Schedule</button>
+      <ul id="revisionList"></ul>
+    </section>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

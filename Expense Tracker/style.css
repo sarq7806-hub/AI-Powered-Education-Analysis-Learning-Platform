@@ -1,0 +1,147 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+/* Expense Tracker Styles */
+.summary {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: #e7f4e4;
+    padding: 20px;
+    border-radius: 10px;
+    width: 200px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin: 10px;
+    text-align: center;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+#totalIncome, #totalExpense, #balance {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #2E7D32;
+}
+
+/* Form styles */
+.form-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    background: #f0f8f5;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="text"], input[type="number"], select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 180px;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, select:focus {
+    border-color: #4CAF50;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+thead {
+    background-color: #4CAF50;
+    color: white;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.delete-btn {
+    background-color: #e53935;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #c62828;
+}
+
+/* Highlight selected row */
+.selected {
+    background-color: #ffe0b2;
+}

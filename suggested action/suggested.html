@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Educational Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            background-color: #4CAF50;
+            padding: 10px 0;
+            color: white;
+        }
+        section {
+            margin: 20px 0;
+        }
+        h2 {
+            color: #333;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        /* Styles for quiz questions and test */
+        .question {
+            margin: 10px 0;
+        }
+        .question h3 {
+            margin: 0 0 5px 0;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            margin: 5px 0;
+        }
+        .result {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Educational Platform</h1>
+    </header>
+
+    <!-- Lessons Section -->
+    <section id="lessons">
+        <h2>Lessons</h2>
+        <div class="card" id="lesson1">
+            <h3>Lesson 1: Introduction to Algebra</h3>
+            <p>Algebra involves solving equations and understanding variables. Example: 2x + 3 = 7.</p>
+        </div>
+        <div class="card" id="lesson2">
+            <h3>Lesson 2: The Solar System</h3>
+            <p>The solar system includes planets like Earth, Mars, and Jupiter orbiting the Sun.</p>
+        </div>
+    </section>
+
+    <!-- Quizzes Section -->
+    <section id="quizzes">
+        <h2>Quizzes</h2>
+        <!-- Quiz 1 -->
+        <div class="card" id="quiz1">
+            <h3>Quiz 1: Basic Math</h3>
+            <div class="question">
+                <h4>1. What is 5 + 7?</h4>
+                <ul class="options">
+                    <li><input type="radio" name="q1" value="10"> 10</li>
+                    <li><input type="radio" name="q1" value="12"> 12</li>
+                    <li><input type="radio" name="q1" value="14"> 14</li>
+                </ul>
+            </div>
+            <button onclick="submitQuiz('quiz1')">Submit Quiz</button>
+            <div class="result" id="result1"></div>
+        </div>
+        <!-- Quiz 2 -->
+        <div class="card" id="quiz2">
+            <h3>Quiz 2: Science</h3>
+            <div class="question">
+                <h4>1. What planet is known as the Red Planet?</h4>
+                <ul class="options">
+                    <li><input type="radio" name="q2" value="Mars"> Mars</li>
+                    <li><input type="radio" name="q2" value="Jupiter"> Jupiter</li>
+                    <li><input type="radio" name="q2" value="Venus"> Venus</li>
+                </ul>
+            </div>
+            <button onclick="submitQuiz('quiz2')">Submit Quiz</button>
+            <div class="result" id="result2"></div>
+        </div>
+        <!-- Quiz 3 -->
+        <div class="card" id="quiz3">
+            <h3>Quiz 3: History</h3>
+            <div class="question">
+                <h4>1. Who was the first President of the United States?</h4>
+                <ul class="options">
+                    <li><input type="radio" name="q3" value="George Washington"> George Washington</li>
+                    <li><input type="radio" name="q3" value="Abraham Lincoln"> Abraham Lincoln</li>
+                    <li><input type="radio" name="q3" value="Thomas Jefferson"> Thomas Jefferson</li>
+                </ul>
+            </div>
+            <button onclick="submitQuiz('quiz3')">Submit Quiz</button>
+            <div class="result" id="result3"></div>
+        </div>
+    </section>
+
+    <!-- Practice Test Section -->
+    <section id="practice">
+        <h2>Mock Practice Test</h2>
+        <div class="card" id="mockTest">
+            <h3>Practice Test: Math and Science</h3>
+            <div class="question">
+                <h4>1. What is 9 x 3?</h4>
+                <ul class="options">
+                    <li><input type="radio" name="pt1" value="27"> 27</li>
+                    <li><input type="radio" name="pt1" value="24"> 24</li>
+                    <li><input type="radio" name="pt1" value="21"> 21</li>
+                </ul>
+            </div>
+            <div class="question">
+                <h4>2. Which planet has rings?</h4>
+                <ul class="options">
+                    <li><input type="radio" name="pt2" value="Saturn"> Saturn</li>
+                    <li><input type="radio" name="pt2" value="Earth"> Earth</li>
+                    <li><input type="radio" name="pt2" value="Mars"> Mars</li>
+                </ul>
+            </div>
+            <button onclick="submitPractice()">Submit Practice Test</button>
+            <div class="result" id="practiceResult"></div>
+        </div>
+    </section>
+
+    <script>
+        function submitQuiz(quizId) {
+            let score = 0;
+            if (quizId === 'quiz1') {
+                const answer = document.querySelector('input[name="q1"]:checked');
+                if (answer && answer.value === '12') {
+                    score++;
+                }
+                document.getElementById('result1').innerText = 'Your score: ' + score + '/1';
+            } else if (quizId === 'quiz2') {
+                const answer = document.querySelector('input[name="q2"]:checked');
+                if (answer && answer.value === 'Mars') {
+                    score++;
+                }
+                document.getElementById('result2').innerText = 'Your score: ' + score + '/1';
+            } else if (quizId === 'quiz3') {
+                const answer = document.querySelector('input[name="q3"]:checked');
+                if (answer && answer.value === 'George Washington') {
+                    score++;
+                }
+                document.getElementById('result3').innerText = 'Your score: ' + score + '/1';
+            }
+        }
+
+        function submitPractice() {
+            let score = 0;
+            const answers = [
+                {name: 'pt1', correct: '27'},
+                {name: 'pt2', correct: 'Saturn'}
+            ];
+            answers.forEach(ans => {
+                const selected = document.querySelector(`input[name="${ans.name}"]:checked`);
+                if (selected && selected.value === ans.correct) {
+                    score++;
+                }
+            });
+            document.getElementById('practiceResult').innerText = 'Your score: ' + score + '/' + answers.length;
+        }
+    </script>
+</body>
+</html>

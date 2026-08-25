@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Skill Gap Detection</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #f0f4f8;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+
+  header {
+    background-color: #4a90e2;
+    padding: 30px 20px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 2.5em;
+  }
+
+  main {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section {
+    margin-bottom: 25px;
+  }
+
+  h2 {
+    margin-bottom: 10px;
+    font-size: 1.25em;
+    color: #444;
+  }
+
+  select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    transition: border-color 0.3s;
+  }
+
+  select:focus {
+    border-color: #4a90e2;
+    outline: none;
+  }
+
+  button {
+    padding: 12px 25px;
+    background-color: #4a90e2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  button:hover {
+    background-color: #357ab8;
+    transform: translateY(-2px);
+  }
+
+  #result {
+    margin-top: 40px;
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  /* Table styles */
+  .skill-gap {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .skill-gap th, .skill-gap td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  .skill-gap th {
+    background-color: #f7f7f7;
+  }
+
+  /* Status labels */
+  .status-have {
+    color: #27ae60;
+    font-weight: bold;
+  }
+
+  .status-missing {
+    color: #e67e22;
+    font-weight: bold;
+  }
+
+  .status-extra {
+    color: #c0392b;
+    font-weight: bold;
+  }
+
+  @media(max-width: 600px){
+    main {
+      margin: 15px;
+      padding: 15px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Skill Gap Detection</h1>
+</header>
+
+<main>
+  <form id="skillForm" onsubmit="return false;">
+    <div class="section">
+      <h2>Current Skills (select multiple)</h2>
+      <select id="currentSkills" multiple>
+        <option value="Python">Python</option>
+        <option value="SQL">SQL</option>
+        <option value="Statistics">Statistics</option>
+        <option value="Pandas">Pandas</option>
+        <option value="NumPy">NumPy</option>
+        <option value="Machine Learning">Machine Learning</option>
+        <option value="Deep Learning">Deep Learning</option>
+        <option value="HTML">HTML</option>
+        <option value="CSS">CSS</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="React">React</option>
+        <option value="Node.js">Node.js</option>
+        <option value="TensorFlow">TensorFlow</option>
+      </select>
+    </div>
+    <div class="section">
+      <h2>Target Career</h2>
+      <select id="targetCareer">
+        <option value="Data Scientist">Data Scientist</option>
+        <option value="Web Developer">Web Developer</option>
+        <option value="AI Engineer">AI Engineer</option>
+      </select>
+    </div>
+    <button type="button" onclick="generateReport()">Analyze Skills</button>
+  </form>
+
+  <div id="result"></div>
+</main>
+
+<script>
+// Enhanced mock data: required skills per career
+const careerSkills = {
+  "Data Scientist": ["Python", "SQL", "Statistics", "Pandas", "NumPy", "Machine Learning", "Deep Learning"],
+  "Web Developer": ["HTML", "CSS", "JavaScript", "React", "Node.js"],
+  "AI Engineer": ["Python", "Machine Learning", "Deep Learning", "TensorFlow"]
+};
+
+function generateReport() {
+  const selectedSkills = Array.from(document.getElementById('currentSkills').selectedOptions).map(opt => opt.value);
+  const targetCareer = document.getElementById('targetCareer').value;
+  const requiredSkills = careerSkills[targetCareer] || [];
+
+  const missingSkills = requiredSkills.filter(skill => !selectedSkills.includes(skill));
+  const skillsHave = selectedSkills.filter(skill => requiredSkills.includes(skill));
+
+  // Calculate skill score
+  const score = Math.round((skillsHave.length / requiredSkills.length) * 100);
+
+  // Render report
+  let html = `<h2>Skill Gap Report for ${targetCareer}</h2>`;
+  html += `<p>Skill Score: <strong>${score}%</strong></p>`;
+  html += `<table class="skill-gap"><tr><th>Skill</th><th>Status</th></tr>`;
+  // Skills you have
+  selectedSkills.forEach(s => {
+    let status = requiredSkills.includes(s) ? `<span class="status-have">✓ Have</span>` : `<span class="status-extra">✗ Extra</span>`;
+    html += `<tr><td>${s}</td><td>${status}</td></tr>`;
+  });
+  // Missing skills
+  missingSkills.forEach(s => {
+    html += `<tr><td>${s}</td><td class="status-missing">⚠️ Missing</td></tr>`;
+  });
+  html += `</table>`;
+  document.getElementById('result').innerHTML = html;
+}
+</script>
+
+</body>
+</html>

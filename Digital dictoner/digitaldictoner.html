@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Digital Diary</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="diary">
+
+    <h1>📖 Digital Diary</h1>
+
+    <div id="date"></div>
+
+    <textarea
+        id="note"
+        placeholder="Write your diary here..."
+    ></textarea>
+
+    <div class="buttons">
+
+        <button class="new" onclick="newNote()">
+            New
+        </button>
+
+        <button class="open" onclick="openNote()">
+            Open
+        </button>
+
+        <button class="save" onclick="saveNote()">
+            Save
+        </button>
+
+        <button class="clear" onclick="clearNote()">
+            Clear
+        </button>
+
+    </div>
+
+    <input
+        type="file"
+        id="fileInput"
+        accept=".txt"
+        hidden
+    >
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

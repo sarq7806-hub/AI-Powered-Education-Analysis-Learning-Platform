@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Registration Page</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .register-container {
+        background-color: white;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 350px;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    h2 {
+        margin-bottom: 20px;
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+        width: 100%;
+        padding: 12px 8px;
+        margin: 8px 0 16px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    #message {
+        margin-top: 20px;
+        font-weight: bold;
+        color: green;
+    }
+</style>
+</head>
+<body>
+<div class="register-container">
+    <h2>Register</h2>
+    <form id="registerForm" onsubmit="return showMessage()">
+        <input type="text" id="name" placeholder="Enter your name" required />
+        <input type="email" id="email" placeholder="Enter your email" required />
+        <input type="password" id="password" placeholder="Create a password" required />
+        <button type="submit">Register</button>
+    </form>
+    <div id="message"></div>
+</div>
+
+<script>
+function showMessage() {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    // You can add validation or save data here
+    document.getElementById('message').innerText = "Registration successful!";
+    return false; // Prevent actual form submission
+}
+</script>
+</body>
+</html>

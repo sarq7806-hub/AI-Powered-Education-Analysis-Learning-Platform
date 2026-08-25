@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Expense & Library Tracker</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="container">
+
+    <h1>💰 Expense & Library Tracker</h1>
+
+    <!-- Expense Tracker Section -->
+    <section>
+        <h2>Expense Tracker</h2>
+        <div class="summary">
+            <div class="card">
+                <h3>Total Income</h3>
+                <p id="totalIncome">₹0</p>
+            </div>
+            <div class="card">
+                <h3>Total Expense</h3>
+                <p id="totalExpense">₹0</p>
+            </div>
+            <div class="card">
+                <h3>Balance</h3>
+                <p id="balance">₹0</p>
+            </div>
+        </div>
+
+        <div class="form-box">
+            <input type="text" id="description" placeholder="Description" />
+            <input type="number" id="amount" placeholder="Amount" />
+            <select id="type">
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+            <select id="category">
+                <option value="Food">Food</option>
+                <option value="Travel">Travel</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Education">Education</option>
+                <option value="Bills">Bills</option>
+                <option value="Other">Other</option>
+            </select>
+            <button onclick="addTransaction()">Add Transaction</button>
+        </div>
+
+        <h2>Transaction History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="transactionList"></tbody>
+        </table>
+    </section>
+
+    <hr />
+
+    <!-- Library Books Section -->
+    <section>
+        <h2>Library Books</h2>
+        <div class="library-form">
+            <input type="text" id="title" placeholder="Title" />
+            <input type="text" id="author" placeholder="Author" />
+            <input type="number" id="year" placeholder="Year" />
+            <button onclick="addBook()">Add Book</button>
+            <button onclick="updateBook()">Update Book</button>
+            <button onclick="deleteBook()">Delete Selected</button>
+            <button onclick="clearFields()">Clear</button>
+        </div>
+
+        <table id="bookTable" style="width:100%; margin-top:20px; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Year</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
